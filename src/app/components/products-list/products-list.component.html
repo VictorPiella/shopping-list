@@ -1,1 +1,25 @@
-<p>products-list works!</p>
+<div id="header">
+
+    <div class="button-wrapper">
+        <button [ngClass]="filterBy === 'title' ? 'active' : ''" (click)="changeFilter('title')">title</button>
+        <button [ngClass]="filterBy === 'price' ? 'active' : ''" (click)="changeFilter('price')">price</button>
+        <button [ngClass]="filterBy === 'description' ? 'active' : ''" (click)="changeFilter('description')">description</button>
+        <button [ngClass]="filterBy === 'email' ? 'active' : ''" (click)="changeFilter('email')">email</button>
+    </div>
+    <input type="text">
+</div>
+
+<div class="product" *ngFor="let product of productsView; index as i">
+    <img [src]=product.image alt=product.title height=100; >
+    <div class="content">
+        <h2>{{ product.title }}</h2>
+        <p>{{ product.description }}</p>
+        <h3>{{ product.price }} €</h3>
+    </div>
+    <a href=mailto:{{product.email}}>
+        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+    </a>
+    <i class="fa fa-star-o" aria-hidden="true"></i>
+</div>
+
+<button (click)="seeMore()">SeeMore</button>
