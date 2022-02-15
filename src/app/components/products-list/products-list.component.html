@@ -6,11 +6,12 @@
         <button [ngClass]="filterBy === 'description' ? 'active' : ''" (click)="changeFilter('description')">description</button>
         <button [ngClass]="filterBy === 'email' ? 'active' : ''" (click)="changeFilter('email')">email</button>
     </div>
-    <input type="text">
+    <input type="text" class="input" placeholder="Search ...">
 </div>
 
+
 <div class="product" *ngFor="let product of productsView; index as i">
-    <img [src]=product.image alt=product.title height=100; >
+    <img [src]=product.image alt=product.title style="width: 100px; height: 100px; object-fit: cover;" >
     <div class="content">
         <h2>{{ product.title }}</h2>
         <p>{{ product.description }}</p>
@@ -19,7 +20,7 @@
     <a href=mailto:{{product.email}}>
         <i class="fa fa-envelope-o" aria-hidden="true"></i>
     </a>
-    <i class="fa fa-star-o" aria-hidden="true"></i>
+    <i class="fa fa-star-o" (click)=addToFav(product) aria-hidden="true"></i>
 </div>
 
-<button (click)="seeMore()">SeeMore</button>
+<button class="see-more" (click)="seeMore()"><i class="fa fa-chevron-down"></i></button>
