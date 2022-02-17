@@ -1,12 +1,21 @@
 <div id="header">
 
+    <div class="favs-modal" (click)=seeFavs() alt="seeMore">
+        <i *ngIf="!modalFavs" class="fa fa-star-o" aria-hidden="true"></i>
+        <i *ngIf="modalFavs" class="fa fa-star" aria-hidden="true"></i>
+    </div>
+
     <div class="button-wrapper">
         <button [ngClass]="filterBy === 'title' ? 'active' : ''" (click)="changeFilter('title')">title</button>
         <button [ngClass]="filterBy === 'price' ? 'active' : ''" (click)="changeFilter('price')">price</button>
         <button [ngClass]="filterBy === 'description' ? 'active' : ''" (click)="changeFilter('description')">description</button>
         <button [ngClass]="filterBy === 'email' ? 'active' : ''" (click)="changeFilter('email')">email</button>
     </div>
-    <input type="text" class="input" placeholder="Search ...">
+    
+    <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+        <input id="name" type="text" formControlName="searchInput">
+    </form>
+    <button style="display: none" type="submit">Submit</button>
 </div>
 
 
@@ -20,7 +29,12 @@
     <a href=mailto:{{product.email}}>
         <i class="fa fa-envelope-o" aria-hidden="true"></i>
     </a>
-    <i class="fa fa-star-o" (click)=addToFav(product) aria-hidden="true"></i>
+    <span (click)=addToFav(product)>
+        <i *ngIf="!isFav(product)" class="fa fa-star-o" aria-hidden="true"></i>
+        <i *ngIf="isFav(product)" class="fa fa-star" aria-hidden="true"></i>
+    </span>
 </div>
 
-<button class="see-more" (click)="seeMore()"><i class="fa fa-chevron-down"></i></button>
+<button *ngIf="showMore" class="seeMore" alt="seeMore" (click)="seeMore()"><i class="fa fa-chevron-down"></i></button>
+
+<app-favourites *ngIf="modalFavs" [favouritesProducts]=productsFav (change)="addToFav($event)" class="favourites"></app-favourites>

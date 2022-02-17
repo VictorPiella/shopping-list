@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../service/products.service';
+import * as _ from 'lodash';
 import { map } from 'rxjs/operators';
+import { Product } from '../../products';
+import { FormControl, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -13,15 +16,21 @@ export class ProductsListComponent implements OnInit {
   products:any;
   productsView:any;
   productsSearch:any;
-  productsFav:any;
+  productsFav: any;
   filterBy = 'title'; 
   viewport = 4; 
+  showMore = true;
+  modalFavs = false;
+
+  searchForm = new FormGroup({
+    searchInput: new FormControl(''),
+  });
 
   constructor(private productsService: ProductsService) { }
 
   ngOnInit(): void {
     this.getProductsData();
-    console.log(this.productsSearch)
+    this.productsFav = [];
   }
 
   getProductsData () {
@@ -33,37 +42,61 @@ export class ProductsListComponent implements OnInit {
 
   search(query: string) {
     if(this.filterBy === 'title'){
-      this.productsSearch = this.products.filter((f: any) => f.title.includes(query));
+      this.productsSearch = this.products.filter((f : any) => f.title.toLowerCase().includes(query));
     }
     else if(this.filterBy === 'price'){
-      this.productsSearch = this.products.filter((f: any) => f.price.includes(query));
+      this.productsSearch = this.products.filter((f: any) => f.price.toLowerCase().includes(query));
     }
     else if(this.filterBy === 'description'){
-      this.productsSearch = this.products.filter((f: any) => f.description.includes(query));
+      this.productsSearch = this.products.filter((f: any) => f.description.toLowerCase().includes(query));
     }
     else if(this.filterBy === 'email'){
-      this.productsSearch = this.products.filter((f: any) => f.email.includes(query));
+      this.productsSearch = this.products.filter((f: any) => f.email.toLowerCase().includes(query));
     }
     this.productsView = this.productsSearch.slice(0, 4);
     this.viewport = 4;
+    this.showMore = true;
   }
 
   seeMore(){
     this.viewport +=4;
     if(this.productsSearch){
       this.productsView = this.productsSearch.slice(0, this.viewport);
+      if(this.productsView.length >= this.productsSearch.length){
+        this.showMore = false  
+      }
     }else {
       this.productsView = this.products.slice(0, this.viewport);
+      if(this.productsView.length >= this.products.length){
+        this.showMore = false  
+      }
     }
 
   }
   changeFilter(filter: string){
     this.filterBy = filter;
   }
-  addToFav(product: any) {
-    this.productsFav.push(product);
-  }
+  addToFav(product: Object) {    
+    if(this.isFav(product)){
+      const index: number = this.productsFav.indexOf(product);
+      this.productsFav.splice(index, 1);
 
+    }else{
+      this.productsFav.push(product as any);
+    }
+  }
+  
+  isFav(product: Object) {
+    return this.productsFav.includes(product);
+    
+  }
+  seeFavs(){
+    this.modalFavs = !this.modalFavs;
+  }
+  onSubmit() {
+    const query = this.searchForm.value.searchInput.toLowerCase();
+    this.search(query);
+  }
 }
   
 

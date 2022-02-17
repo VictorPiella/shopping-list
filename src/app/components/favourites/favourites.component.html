@@ -1,0 +1,20 @@
+
+
+<div *ngIf="favouritesProducts">
+    <div class="product" *ngFor="let product of favouritesProducts; index as i">
+        <img [src]=product.image alt=product.title style="width: 100px; height: 100px; object-fit: cover;" >
+        <div class="content">
+            <h2>{{ product.title }}</h2>
+            <p>{{ product.description }}</p>
+            <h3>{{ product.price }} €</h3>
+        </div>
+        <a href=mailto:{{product.email}}>
+            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+        </a>
+        <i class="fa fa-star" aria-hidden="true" (click)=removeFromList(product) ></i>
+    </div>
+</div>
+
+<div class="product" *ngIf="favouritesProducts.length<1">
+    No products now ....
+</div>

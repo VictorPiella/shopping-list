@@ -7,7 +7,6 @@
 	100% {color: #178ED4;}
     
 }
-
 #header{
     width: 125%;
     height: 350px;
@@ -22,6 +21,13 @@
     justify-content: center;
     align-items: center;
     animation: backgroundColor 5s infinite alternate linear;
+    .favs-modal{
+        position: absolute;
+        right: 150px;
+        top: 120px;
+        font-family: 20px;
+        color:  white;
+    }
     button{
         border: none;
         margin-top: 250px;
@@ -48,13 +54,10 @@
         padding: 10px;
         background-color: #fffbff;
         border: solid 2px grey;
-        box-shadow: 0 14px 26px rgb(0 0 0 / 4%);
+        box-shadow: 0 0 14px rgb(0 0 0 / 10%);
     }
 }
 
-body{
-    background-color: #f5f7fb;
-}
 
 .product{
     width: 90%;
@@ -62,7 +65,7 @@ body{
     padding: 20px;
     min-height: 100px;
     background-color: #fffbff;
-    box-shadow: 0 14px 26px rgb(0 0 0 / 4%);
+    box-shadow: 0 0 14px rgb(0 0 0 / 10%);
     margin: 20px auto;
     display: flex;
     align-items: center;
@@ -82,13 +85,22 @@ body{
     }
 }
 
-.see-more{
+.seeMore{
     display: block;
     border-radius: 50%;
     padding: 10px;
     color: #fffbff;
     animation: backgroundColor 5s infinite alternate linear;
     border: none;
-    box-shadow: 0 14px 26px rgb(0 0 0 / 4%);
-    margin: 0 auto;
+    box-shadow: 0 0 14px rgb(0 0 0 / 10%);
+    margin: 20px auto;
+}
+
+
+.favourites{
+    position: absolute;
+    width: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
