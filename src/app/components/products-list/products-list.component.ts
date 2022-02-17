@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../service/products.service';
-import * as _ from 'lodash';
-import { map } from 'rxjs/operators';
-import { Product } from '../../products';
 import { FormControl, FormGroup } from '@angular/forms';
 
 
