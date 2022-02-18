@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../service/products.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Product } from '../../products';
 
 
 @Component({
@@ -39,16 +40,16 @@ export class ProductsListComponent implements OnInit {
 
   search(query: string) {
     if(this.filterBy === 'title'){
-      this.productsSearch = this.products.filter((f : any) => f.title.toLowerCase().includes(query));
+      this.productsSearch = this.products.filter((f : Product) => f.title.toLowerCase().includes(query));
     }
     else if(this.filterBy === 'price'){
-      this.productsSearch = this.products.filter((f: any) => f.price.toLowerCase().includes(query));
+      this.productsSearch = this.products.filter((f: Product) => f.price.toLowerCase().includes(query));
     }
     else if(this.filterBy === 'description'){
-      this.productsSearch = this.products.filter((f: any) => f.description.toLowerCase().includes(query));
+      this.productsSearch = this.products.filter((f: Product) => f.description.toLowerCase().includes(query));
     }
     else if(this.filterBy === 'email'){
-      this.productsSearch = this.products.filter((f: any) => f.email.toLowerCase().includes(query));
+      this.productsSearch = this.products.filter((f: Product) => f.email.toLowerCase().includes(query));
     }
     this.productsView = this.productsSearch.slice(0, 4);
     this.viewport = 4;
@@ -56,7 +57,7 @@ export class ProductsListComponent implements OnInit {
   }
 
   seeMore(){
-    this.viewport +=4;
+    this.viewport +=5;
     if(this.productsSearch){
       this.productsView = this.productsSearch.slice(0, this.viewport);
       if(this.productsView.length >= this.productsSearch.length){
@@ -73,17 +74,17 @@ export class ProductsListComponent implements OnInit {
   changeFilter(filter: string){
     this.filterBy = filter;
   }
-  addToFav(product: Object) {    
+  addToFav(product: any) {    
     if(this.isFav(product)){
       const index: number = this.productsFav.indexOf(product);
       this.productsFav.splice(index, 1);
 
     }else{
-      this.productsFav.push(product as any);
+      this.productsFav.push(product as Product);
     }
   }
   
-  isFav(product: Object) {
+  isFav(product: Product) {
     return this.productsFav.includes(product);
     
   }
@@ -95,8 +96,3 @@ export class ProductsListComponent implements OnInit {
     this.search(query);
   }
 }
-  
-
-
-//todo localstorage
-// after reset search or reload page check favs to set the fav icon to active
